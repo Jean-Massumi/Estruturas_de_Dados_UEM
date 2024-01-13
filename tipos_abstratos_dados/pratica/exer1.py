@@ -4,6 +4,9 @@ class Robo:
     ser um valor entre 1 e 10.
     '''
 
+    nome : str
+    pos: int
+
     def __init__(self, nome: str):
         '''
         Cria um novo robo com o *nome* e que está na posição 1.
@@ -13,7 +16,11 @@ class Robo:
         >>> r.info()
         'r2d2 (1)'
         '''
-        return
+
+        self.nome = nome
+        self.pos = 1
+
+    
 
     def posicao(self) -> int:
         '''
@@ -25,7 +32,7 @@ class Robo:
         >>> r.posicao()
         3
         '''
-        return 0
+        return self.pos 
 
     def info(self) -> str:
         '''
@@ -38,7 +45,7 @@ class Robo:
         >>> r.info()
         'rob (3)'
         '''
-        return ''
+        return f'{self.nome} ({self.pos})'
 
     def move(self, n: int):
         '''
@@ -67,4 +74,4 @@ class Robo:
         >>> r.posicao()
         1
         '''
-        return
+        self.pos = max(1, min(10, self.pos + n))
