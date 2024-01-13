@@ -18,7 +18,10 @@ class Dias:
     Um conjunto de dias da semana que um evento deve se repetir.
     '''
 
-    def __init__(self):
+    dias_bools :list[bool]
+
+
+    def __init__(self,):
         '''
         Cria um novo conjunto vazio de dias.
 
@@ -27,7 +30,9 @@ class Dias:
         >>> c.lista()
         []
         '''
-        return
+
+        self.dias_bools = [False] * 7
+        
 
     def alterna(self, d: Dia):
         '''
@@ -46,7 +51,10 @@ class Dias:
         >>> c.lista()
         ['seg']
         '''
-        return
+
+        self.dias_bools[d.value] = not self.dias_bools[d.value]
+ 
+
 
     def lista(self) -> list[str]:
         '''
@@ -71,4 +79,10 @@ class Dias:
         >>> c.lista()
         ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab']
         '''
-        return []
+        abreviacoes = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab']
+        dias_ativos = list()
+        for i in range(7):
+            if self.dias_bools[i]:
+                dias_ativos.append(abreviacoes[i])
+
+        return dias_ativos
