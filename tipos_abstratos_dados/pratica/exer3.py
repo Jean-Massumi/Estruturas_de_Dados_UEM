@@ -17,6 +17,7 @@ class Dias:
     '''
     Um conjunto de dias da semana que um evento deve se repetir.
     '''
+    lista_dias = []
 
     def __init__(self):
         '''
@@ -27,6 +28,9 @@ class Dias:
         >>> c.lista()
         []
         '''
+
+        self.lista_dias = list()
+
         return
 
     def alterna(self, d: Dia):
@@ -46,7 +50,13 @@ class Dias:
         >>> c.lista()
         ['seg']
         '''
-        return
+
+        if d.value not in self.lista_dias:
+            self.lista_dias.append(d.value)
+        else:
+            self.lista_dias.remove(d.value)
+
+
 
     def lista(self) -> list[str]:
         '''
@@ -71,4 +81,15 @@ class Dias:
         >>> c.lista()
         ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab']
         '''
-        return []
+        
+        self.lista_dias.sort()
+        dias_ativos = []
+        dia_semana = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab']
+
+        for i in self.lista_dias:
+            for j in range(7):
+                if i == j:
+                    dias_ativos.append(dia_semana[i])
+
+
+        return dias_ativos
