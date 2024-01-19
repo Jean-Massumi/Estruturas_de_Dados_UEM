@@ -95,9 +95,8 @@ class BancoHoras:
 
         '''
 
-        if (saque_horas < self.banco_horas) and (saque_minutos < self.banco_minutos) or \
-                    (saque_horas < self.banco_horas) and (saque_minutos > self.banco_minutos) or \
-                                ((saque_horas == self.banco_horas) and (saque_minutos == self.banco_minutos)):
+        if (saque_horas < self.banco_horas) and (saque_minutos != self.banco_minutos) or \
+                ((saque_horas == self.banco_horas) and (saque_minutos == self.banco_minutos)):
            
             if saque_minutos > self.banco_minutos:
                 self.banco_horas -= saque_horas + 1
@@ -130,15 +129,13 @@ class BancoHoras:
         '12:01'
         '''
 
-        if (self.banco_horas == 0) and (self.banco_minutos == 0):
-            horas_str = '00:00'
-        elif (self.banco_horas < 10) and (self.banco_minutos < 10):
-            horas_str = f'0{self.banco_horas}:0{self.banco_minutos}'
-        elif (self.banco_horas < 10) and (self.banco_minutos >= 10):
-            horas_str = f'0{self.banco_horas}:{self.banco_minutos}'
-        elif (self.banco_horas >= 10) and (self.banco_minutos < 10):
-            horas_str = f'{self.banco_horas}:0{self.banco_minutos}'
-        else:
-            horas_str = f'{self.banco_horas}:{self.banco_minutos}'
+        h_str = str(self.banco_horas)
+        m_str = str(self.banco_minutos)
 
-        return horas_str
+        if self.banco_horas < 10:
+            h_str = '0' + h_str
+        if self.banco_minutos < 10:
+            m_str = '0' + m_str
+
+
+        return f'{h_str}:{m_str}'
