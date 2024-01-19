@@ -4,7 +4,7 @@ class BancoHoras:
     '''
 
 
-    def __init__(self, minutos):
+    def __init__(self, minutos:int):
         '''
             Cria um armazenamento de minutos extras de um funcionario.
 
@@ -13,89 +13,117 @@ class BancoHoras:
         Exemplos:
         >>> h = BancoHoras(300)
         >>> h.consulta()
-        '02:24'
-        >>> h = BancoHoras(5, 80)
+        '05:00'
+        >>> h = BancoHoras(-53)
         Traceback (most recent call last):
         ...
-        ValueError: A margem de minutos foi excedido
+        ValueError: Minutos em tempo negativo
     
         '''
+
+        if minutos >= 0:
+            self.minutos = minutos
+        else:
+            raise ValueError('Minutos em tempo negativo')
+        
     
 
-    def deposita_BH(self, horas_depositadas, minutos_depositados):
+    def deposita_BH(self, minutos:int):
         '''
-            Deposita as horas extras e minutos extras no banco de horas e minutos respectivamente.
+            Deposita os minutos extras no banco de horas.
 
         
         Exemplos:
-        >>> h = BancoHoras(2, 24)
+        >>> h = BancoHoras(300)
         >>> h.consulta()
-        '02:24'
-        >>> h.deposita_BH(1, 56)
+        '05:00'
+        >>> h.deposita_BH(127)
         >>> h.consulta()
-        '04:20'
+        '07:07'
         '''
-    
+
+        self.minutos += minutos
 
 
-    def saque(self, saque_horas, saque_minutos):
+
+    def saque(self, minutos:int):
         '''
-            Saca uma quantidade de horas e minutos que um funcionario deseja se ausentar.
+            Saca uma quantidade de minutos que um funcionario deseja se ausentar.
 
             Requer que o saldo seja maior que o valor do saque sugerido pelo funcionario.
         
         Exemplos:
         # Saldo Suficiente
-        >>> h = BancoHoras(2, 24)
+        >>> h = BancoHoras(144)
         >>> h.consulta()
         '02:24'
-        >>> h.saque(1, 17)
+        >>> h.saque(77)
         >>> h.consulta()
         '01:07'
 
-        >>> h = BancoHoras(3, 43)
+        >>> h = BancoHoras(223)
         >>> h.consulta()
         '03:43'
-        >>> h.saque(2, 57)
+        >>> h.saque(177)
         >>> h.consulta()
         '00:46'
         
         # Saldo Insuficiente
-        >>> h = BancoHoras(2, 24)
+        >>> h = BancoHoras(144)
         >>> h.consulta()
         '02:24'
-        >>> h.saque(3, 42)
+        >>> h.saque(222)
         Traceback (most recent call last):
         ...
         ValueError: Saque NEGADO! Saldo insuficiente!
 
-        >>> h = BancoHoras(4, 53)
+        >>> h = BancoHoras(293)
         >>> h.consulta()
         '04:53'
-        >>> h.saque(4, 57)
+        >>> h.saque(297)
         Traceback (most recent call last):
         ...
         ValueError: Saque NEGADO! Saldo insuficiente!
 
         '''
 
-        
+        if minutos < self.minutos:
+            self.minutos -= minutos
+        else:
+            raise ValueError('Saque NEGADO! Saldo insuficiente!')
+
+
 
     def consulta(self) -> str:
         '''
             Mostra o banco de horas de um funcionario
         
         Exemplos:
-        >>> h = BancoHoras(9, 9)
+        >>> h = BancoHoras(549)
         >>> h.consulta()
         '09:09'
-        >>> h.saque(3, 43)
+        >>> h.saque(223)
         >>> h.consulta()
         '05:26'
-        >>> h.deposita_BH(1, 45)
+        >>> h.deposita_BH(105)
         >>> h.consulta()
         '07:11'
-        >>> h.deposita_BH(4, 50)
+        >>> h.deposita_BH(290)
         >>> h.consulta()
         '12:01'
         '''
+
+        self.horas = self.minutos // 60
+        self.resto_minutos = self.minutos % 60
+
+        
+        h_str = str(self.horas)
+        m_str = str(self.resto_minutos)
+
+        if self.horas < 10:
+            h_str = '0' + h_str
+        if self.resto_minutos < 10:
+            m_str = '0' + m_str
+
+
+        return f'{h_str}:{m_str}'
