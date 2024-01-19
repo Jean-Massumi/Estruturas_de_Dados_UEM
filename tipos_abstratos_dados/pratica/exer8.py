@@ -27,7 +27,7 @@ class BancoHoras:
         if minutos >= 60:
             raise ValueError('A margem de minutos foi excedido')
         else:
-            self.banco_horas = horas
+            self.horas = horas
             self.banco_minutos = minutos
 
 
@@ -45,12 +45,12 @@ class BancoHoras:
         '04:20'
         '''
 
-        self.banco_horas += horas_depositadas
+        self.horas += horas_depositadas
         self.banco_minutos += minutos_depositados
     
         if self.banco_minutos >= 60:
             self.banco_minutos = self.banco_minutos % 60
-            self.banco_horas += 1
+            self.horas += 1
     
 
 
@@ -95,15 +95,15 @@ class BancoHoras:
 
         '''
 
-        if (saque_horas < self.banco_horas) and (saque_minutos != self.banco_minutos) or \
-                ((saque_horas == self.banco_horas) and (saque_minutos == self.banco_minutos)):
+        if (saque_horas < self.horas) and (saque_minutos != self.banco_minutos) or \
+                ((saque_horas == self.horas) and (saque_minutos == self.banco_minutos)):
            
             if saque_minutos > self.banco_minutos:
-                self.banco_horas -= saque_horas + 1
+                self.horas -= saque_horas + 1
                 self.banco_minutos += 60 - saque_minutos
 
             else:
-                self.banco_horas -= saque_horas
+                self.horas -= saque_horas
                 self.banco_minutos -= saque_minutos
 
         else:
@@ -129,10 +129,10 @@ class BancoHoras:
         '12:01'
         '''
 
-        h_str = str(self.banco_horas)
+        h_str = str(self.horas)
         m_str = str(self.banco_minutos)
 
-        if self.banco_horas < 10:
+        if self.horas < 10:
             h_str = '0' + h_str
         if self.banco_minutos < 10:
             m_str = '0' + m_str

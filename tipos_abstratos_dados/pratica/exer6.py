@@ -6,11 +6,11 @@ class BancoHoras:
 
     def __init__(self, horas, minutos):
         '''
-            Cria um armazenamento de horas extra e minutos extras de um funcionario.
+        Cria um armazenamento de horas extra e minutos extras de um funcionario.
 
-            As horas e minutos serao representados por valores inteiros positivos.
+        As horas e minutos serao representados por valores inteiros positivos.
 
-            Requer que minutos nao seja >= que 60            
+        Requer que minutos nao seja >= que 60            
 
         Exemplos:
         >>> h = BancoHoras(2, 24)
@@ -31,8 +31,6 @@ class BancoHoras:
         
         Exemplos:
         >>> h = BancoHoras(2, 24)
-        >>> h.consulta()
-        '02:24'
         >>> h.deposita_BH(1, 56)
         >>> h.consulta()
         '04:20'
@@ -85,7 +83,7 @@ class BancoHoras:
 
     def consulta(self) -> str:
         '''
-            Mostra o banco de horas de um funcionario
+            Mostra o saldo do banco de horas de um funcionario
         
         Exemplos:
         >>> h = BancoHoras(9, 9)
