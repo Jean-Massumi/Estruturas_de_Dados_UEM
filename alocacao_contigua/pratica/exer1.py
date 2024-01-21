@@ -105,4 +105,18 @@ class Pilha:
 
     def cheia(self) -> bool:
         '''
+        Devolve True se a pilha está cheia, False caso contrario.
+
+        Eemplos:
+        >>> p = Pilha()
+        >>> p.vazia()
+        True
+        >>> for i in range(CAPACIDADE):
+        ...     p.empilha(str(i))
+        >>> p.cheia()
+        True
+        >>> p.vazia()
+        False
         '''
+
+        return self.topo == CAPACIDADE - 1
