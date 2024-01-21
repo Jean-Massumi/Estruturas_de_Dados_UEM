@@ -111,6 +111,11 @@ class Pilha:
         >>> p = Pilha()
         >>> p.vazia()
         True
+        >>> p.empilha('r')
+        >>> p.cheia()
+        False
+        >>> p.desempilha()
+        'r'
         >>> for i in range(CAPACIDADE):
         ...     p.empilha(str(i))
         >>> p.cheia()
