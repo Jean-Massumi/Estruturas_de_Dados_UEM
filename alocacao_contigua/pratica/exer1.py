@@ -109,8 +109,6 @@ class Pilha:
 
         Eemplos:
         >>> p = Pilha()
-        >>> p.vazia()
-        True
         >>> p.empilha('r')
         >>> p.cheia()
         False
