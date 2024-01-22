@@ -86,23 +86,6 @@ class Pilha:
         >>> p.desempilha()
         'árvore'
 
-        >>> p = Pilha()
-        >>> p.empilha('um')
-        >>> p.empilha('carro')
-        >>> p.empilha('mouse')
-        >>> p.empilha('computador')
-        >>> p.empilha('UEM')
-        >>> inverte_pilha(p)
-        >>> p.desempilha()
-        'um'
-        >>> p.desempilha()
-        'carro'
-        >>> p.desempilha()
-        'mouse'
-        >>> p.desempilha()
-        'computador'
-        >>> p.desempilha()
-        'UEM'
         '''
 
         if self.vazia():
@@ -130,6 +113,28 @@ class Pilha:
 def inverte_pilha(p:Pilha):
     '''
     Inverte a ordem dos elementos de uma pilha.
+
+    Exemplos:
+    >>> p = Pilha()
+    >>> p.empilha('um')
+    >>> p.empilha('carro')
+    >>> inverte_pilha(p)
+    >>> p.desempilha()
+    'um'
+    >>> p.desempilha()
+    'carro'
+  
+    >>> p = Pilha()
+    >>> p.empilha('a')
+    >>> p.empilha('b')
+    >>> p.empilha('c')
+    >>> inverte_pilha(p)
+    >>> p.desempilha()
+    'a'
+    >>> p.desempilha()
+    'b'
+    >>> p.desempilha()
+    'c'
     '''
 
     for i in range(p.topo, p.topo//2, -1):
