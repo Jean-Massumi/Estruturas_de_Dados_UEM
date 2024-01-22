@@ -207,25 +207,24 @@ def troca_pilhas(p1:Pilha, p2:Pilha):
     >>> p2 = Pilha()
     >>> p1.empilha('a')
     >>> p1.empilha('b')
+    >>> p1.empilha('c')
     >>> exibe_pilha(p1)
     a
     b
+    c
     >>> p2.empilha(1)
     >>> p2.empilha(2)
-    >>> p2.empilha(3)
     >>> exibe_pilha(p2)
     1
     2
-    3
     >>> troca_pilhas(p1, p2)
     >>> exibe_pilha(p1)
     1
     2
-    3
     >>> exibe_pilha(p2)
     a
     b
-
+    c
     '''
 
     if p1.topo > p2.topo:
