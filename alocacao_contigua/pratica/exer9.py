@@ -111,9 +111,22 @@ class Fila:
         return self.fim < self.inicio
     
 
+    def cheia(self) -> bool:
+        '''
+        Devolve True se a fila está cheia, False caso contrário.
+        
+        Exemplos
+        >>> f = Fila()
+        >>> f.cheia()
+        False
+        >>> while not f.cheia():
+        ...     f.enfileira('Pato')
+        >>> f.cheia()
+        True
+        >>> f.desenfileira()
+        'Pato'
+        >>> f.cheia()
+        False
+        '''
 
-f = Fila()
-f.enfileira('Márcia')
-f.enfileira('João')
-f.enfileira('Pedro')
-f.desenfileira()
+        return (self.fim == CAPACIDADE - 1) and (self.inicio + (CAPACIDADE - 1) == CAPACIDADE - 1)
