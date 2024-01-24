@@ -30,12 +30,13 @@ class Fila:
     '''
 
     valores: array[str]
-    # Indíce do último elemento da fila, -1 se a fila está vazia.
+    # Indíce do último elemento da fila.
     fim: int
+    # Indíce do primeiro elemento da fila.
+    inicio: int
 
-    # O início da fila é sempre na posição 0. Em enfileira o fim é incrementado
-    # e em desenfileira decrementado e todos os elementos são movidos para a
-    # posição anterior.
+    # O início é incrementado em desenfileira e o fim é incrementado em enfileira.
+    # A fila está vazia se fim < inicio.
 
     def __init__(self):
         '''
@@ -43,6 +44,7 @@ class Fila:
         elementos.
         '''
         self.valores = array(CAPACIDADE, '')
+        self.inicio = 0
         self.fim = -1
 
     def enfileira(self, item: str):
@@ -65,7 +67,7 @@ class Fila:
         >>> f.desenfileira()
         '1'
         '''
-        if self.cheia():
+        if self.fim >= CAPACIDADE - 1:
             raise ValueError('fila cheia')
         self.fim += 1
         self.valores[self.fim] = item
@@ -90,10 +92,8 @@ class Fila:
         '''
         if self.vazia():
             raise ValueError('fila vazia')
-        item = self.valores[0]
-        for i in range(1, self.fim + 1):
-            self.valores[i - 1] = self.valores[i]
-        self.fim -= 1
+        item = self.valores[self.inicio]
+        self.inicio += 1
         return item
 
     def vazia(self) -> bool:
@@ -108,23 +108,12 @@ class Fila:
         >>> f.vazia()
         False
         '''
-        return self.fim == -1
+        return self.fim < self.inicio
+    
 
 
-
-    def cheia(self) -> bool:
-        '''
-        Devolve True se a fila está cheia, False caso contrario.
-
-        Exemplos
-        >>> f = Fila()
-        >>> f.cheia()
-        False
-        >>> while not f.cheia():
-        ...     f.enfileira('Pato')
-        >>> f.cheia()
-        True
-        '''
-
-        return self.fim == CAPACIDADE - 1
-
+f = Fila()
+f.enfileira('Márcia')
+f.enfileira('João')
+f.enfileira('Pedro')
+f.desenfileira()
