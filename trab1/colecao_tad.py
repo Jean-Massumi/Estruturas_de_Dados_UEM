@@ -7,9 +7,8 @@ class Colecoes:
     usuarios.
     '''
 
-    capacidade_album = 60  
     # A *capacidade_album* é uma limitacao que um album pode suportar
-    # uma certa quantidade x de figurinhas nela.
+    # uma certa quantidade x de figurinhas sem ser repetidas nela.
 
 
     def __init__(self) :
@@ -17,15 +16,12 @@ class Colecoes:
         Criação de uma coleção com a quantidade de figurinhas(número de figurinhas total do albúm)
         '''
 
-        self.album = array(self.capacidade_album, 0)
-
 
     def insercao(self, figurinha:int):
         '''
         Insere uma figurinha especifica no album do usuario
 
-        Requer que as numerações das figurinhas sejam > 0:
-        Requer que o albúm não esteja cheio.
+        Requer que 0 < numerações das figurinhas < *capacidade_album*
 
         Exemplos
         >>> c = Colecao()
@@ -35,6 +31,11 @@ class Colecoes:
         >>> c.insercao(12)
         >>> c.gerar_str_figuras()
         "[12, 58]"
+        >>> c.insercao(75)
+        >>> c.insercao(2)
+        >>> c.insercao(33)
+        >>> c.gerar_str_figuras()
+        "[2, 12, 33, 58, 75]"
         '''
 
 

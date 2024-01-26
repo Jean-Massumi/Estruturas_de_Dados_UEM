@@ -7,7 +7,7 @@ class Colecao:
     usuarios.
     '''
 
-    capacidade_album = 5
+    capacidade_album = 100000
     # A *capacidade_album* é uma limitacao que um album pode suportar
     # uma certa quantidade x de figurinhas nela.
 
@@ -28,30 +28,23 @@ class Colecao:
         '''
         Insere uma figurinha especifica no album do usuario
 
-        Requer que as numerações das figurinhas sejam > 0
-        Requer que o albúm não esteja cheio.
+        Requer que 0 < numerações das figurinhas < *capacidade_album*
         
         Exemplos
         >>> c = Colecao()
         >>> c.insercao(58)
         >>> c.gerar_str_figuras()
-        "[58]"
+        '[58]'
         >>> c.insercao(12)
         >>> c.gerar_str_figuras()
-        "[12, 58]"
+        '[12, 58]'
         >>> c.insercao(75)
         >>> c.insercao(2)
         >>> c.insercao(33)
         >>> c.gerar_str_figuras()
-        "[2, 12, 33, 58, 75]"
-         
+        '[2, 12, 33, 58, 75]'
         '''
-         
-        # Faz sentido ter esse erro? Pois como estou trabalhando com quantidade exata de figurinhas
-        # não há necessidade de ter essa erro, pois ele nunca vai passar do limite que foi fixado.
-        # if self.indice_album == self.capacidade_album:
-        #     raise ValueError('Albúm cheio!')
-
+        
         if figurinha > self.capacidade_album or figurinha < 0:
             raise ValueError('Figurinha com enumeração inexistente!')
         
@@ -59,6 +52,7 @@ class Colecao:
             if figurinha not in self.album:
                 if figurinha < self.album[i - 1]:
                     self.album[i] = self.album[i - 1]
+                    self.album_repetidas[i] = self.album_repetidas[i - 1]
                 elif self.indice_album == 0:
                     self.album[self.indice_album] = figurinha
                     self.indice_album += 1
@@ -66,12 +60,13 @@ class Colecao:
                 elif figurinha > self.album[i - 1]:
                     self.album[i] = figurinha
                     self.indice_album += 1
-                    self.album_repetidas[self.indice_album_repetidas] += 1
+                    self.album_repetidas[i] -= self.album_repetidas[i] - 1
                     break
             else: 
                 if figurinha == self.album[i]:
                     self.album_repetidas[i] += 1
 
+        
         self.indice_album_repetidas += 1
 
 
@@ -107,11 +102,11 @@ class Colecao:
         >>> c.insercao(9)
         >>> c.insercao(32)
         >>> c.gerar_str_figuras()
-        "[9, 32, 58]"
+        '[9, 32, 58]'
         >>> c.remocao(32)
         32
         >>> c.gerar_str_figuras()
-        "[9, 58]"
+        '[9, 58]'
         '''
 
         represetacao_str = '['
@@ -137,14 +132,21 @@ class Colecao:
         >>> c.insercao(32)
         >>> c.insercao(32)
         >>> c.gerar_str_figuras_repetidas()
-        "[9 (1), 32 (2), 58 (3)]"
+        '[9 (1), 32 (2), 58 (3)]'
         >>> c.remocao(32)
         32
         >>> c.gerar_str_figuras_repetidas()
-        "[9 (1), 32 (1), 58 (3)]"
+        '[9 (1), 32 (1), 58 (3)]'
         '''
 
-        return ''
+        represetacao_str = '['
+        if self.indice_album != 0:
+            represetacao_str += str(self.album[0]) + f' ({self.album_repetidas[0]})'
+            for i in range(1, self.indice_album):
+                represetacao_str += ', ' + str(self.album[i]) + f' ({self.album_repetidas[i]})'
+        return represetacao_str + ']'
+
+        
 
 
     def troca(self, p1:int, p2:int):
@@ -186,10 +188,18 @@ class Colecao:
 
 
 
-# c = Colecao()
-
+c = Colecao()
 
 # for i in range(10,0, -1):
 #     c.insercao(i)
 
-
+c.insercao(4)
+c.insercao(4)
+c.insercao(8)
+c.insercao(8)
+c.insercao(1)
+c.insercao(5)
+c.insercao(3)
+c.insercao(4)
+c.insercao(10)
+c.insercao(3)
