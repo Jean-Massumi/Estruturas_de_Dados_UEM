@@ -1,13 +1,13 @@
 from __future__ import annotations
 from ed import array
 
-class Colecoes:
+class Colecao:
     '''
     Uma Coleção de figurinhas que permite gerenciar os álbuns e fazer trocas com os 
     usuarios.
     '''
 
-    capacidade_album = 60  
+    capacidade_album = 10
     # A *capacidade_album* é uma limitacao que um album pode suportar
     # uma certa quantidade x de figurinhas nela.
 
@@ -17,16 +17,20 @@ class Colecoes:
         Criação de uma coleção com a quantidade de figurinhas(número de figurinhas total do albúm)
         '''
 
-        self.album = array(self.capacidade_album, 0)
+        self.album = array(self.capacidade_album + 1, 0)
+        self.indice_album = 0
+        self.album_repetidas = array(self.capacidade_album + 1, 0)
+        self.indice_album_repetidas = 0
+
 
 
     def insercao(self, figurinha:int):
         '''
         Insere uma figurinha especifica no album do usuario
 
-        Requer que as numerações das figurinhas sejam > 0:
+        Requer que as numerações das figurinhas sejam > 0
         Requer que o albúm não esteja cheio.
-
+        
         Exemplos
         >>> c = Colecao()
         >>> c.insercao(58)
@@ -35,7 +39,68 @@ class Colecoes:
         >>> c.insercao(12)
         >>> c.gerar_str_figuras()
         "[12, 58]"
+        >>> c.insercao(75)
+        >>> c.insercao(2)
+        >>> c.insercao(33)
+        >>> c.gerar_str_figuras()
+        "[2, 12, 33, 58, 75]"
+         
         '''
+
+        if self.indice_album == self.capacidade_album:
+            raise ValueError('Albúm cheio!')
+        
+        if figurinha > self.capacidade_album or figurinha < 0:
+            raise ValueError('Figurinha com enumeração inexistente!')
+        
+
+
+        # for i in range(self.indice_album, -1, -1):
+        #     if figurinha not in self.album:
+        #         self.album[self.indice_album] = figurinha
+        #         self.indice_album += 1
+        #         self.album_repetidas[self.indice_album_repetidas] += 1
+        #         self.indice_album_repetidas += 1
+        #     else:
+        #         if figurinha == self.album[i]:
+        #             self.album_repetidas[i] += 1
+
+        for i in range(self.indice_album, -1, -1):
+            if figurinha not in self.album:
+                if figurinha < self.album[i - 1]:
+                    self.album[i] = self.album[i - 1]
+                elif self.indice_album == 0:
+                    self.album[self.indice_album] = figurinha
+                    self.indice_album += 1
+                    self.album_repetidas[self.indice_album_repetidas] += 1
+                elif figurinha > self.album[i - 1]:
+                    self.album[i] = figurinha
+                    self.indice_album += 1
+                    self.album_repetidas[self.indice_album_repetidas] += 1
+                    break
+
+            else: 
+                if figurinha == self.album[i]:
+                    self.album_repetidas[i] += 1
+
+
+        self.indice_album_repetidas += 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     def remocao(self,figurinha:int) -> int:
@@ -56,6 +121,8 @@ class Colecoes:
         28
         '''
 
+        return 0
+
 
     def gerar_str_figuras(self) -> str:
         '''
@@ -74,6 +141,14 @@ class Colecoes:
         >>> c.gerar_str_figuras()
         "[9, 58]"
         '''
+
+        represetacao_str = '['
+        if self.indice_album != 0:
+            represetacao_str += str(self.album[0])
+            for i in range(1, self.indice_album):
+                represetacao_str += ', ' + str(self.album[i])
+        return represetacao_str + ']'
+
 
 
     def gerar_str_figuras_repetidas(self) -> str:
@@ -96,6 +171,8 @@ class Colecoes:
         >>> c.gerar_str_figuras_repetidas()
         "[9 (1), 32 (1), 58 (3)]"
         '''
+
+        return ''
 
 
     def troca(self, p1:int, p2:int):
@@ -132,5 +209,15 @@ class Colecoes:
         "[4 (2), 58 (3), 60 (1)]"
         '''
 
+
+        return
+
+
+
+c = Colecao()
+
+
+for i in range(10,0, -1):
+    c.insercao(i)
 
 
