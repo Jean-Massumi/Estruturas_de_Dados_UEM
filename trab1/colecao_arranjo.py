@@ -5,7 +5,46 @@ class Colecao:
     '''
     Uma Coleção de figurinhas que permite gerenciar os álbuns e fazer trocas com os 
     usuarios.
+
+    Exemplos
+    >>> c = Colecao()
+    >>> c.insercao(78)
+    >>> c.insercao(13)
+    >>> c.insercao(58)
+    >>> c.insercao(80)          
+    >>> c.insercao(81)         
+    >>> c.insercao(3)
+    >>> c.insercao(4)
+    >>> c.insercao(3)
+    >>> c.insercao(78)
+    >>> c.insercao(80)
+    >>> c.gerar_str_figuras_repetidas()
+    '[3 (2), 4 (1), 13 (1), 58(1), 78 (2), 80 (2), 81 (1)]'
+    >>> c1 = Colecao()
+    >>> c1.insercao(4)
+    >>> c1.insercao(78)
+    >>> c1.insercao(58)
+    >>> c1.insercao(81)          
+    >>> c1.insercao(33)       
+    >>> c1.insercao(33)
+    >>> c1.insercao(29)
+    >>> c1.insercao(76)
+    >>> c1.insercao(76)
+    >>> c1.insercao(99)
+    >>> c1.gerar_str_figuras_repetidas()
+    '[4 (1), 29 (1), 33 (2), 58 (1), 76(2), 78 (1), 81 (1), 99 (1)]'
+    >>> c1.troca(c, c1)
+    >>> c.gerar_str_figuras_repetidas()
+    '[3 (1), 4 (1), 29(1), 33(1), 58(1), 76 (1), 78 (2), 80 (1), 81 (1)]'
+    >>> c1.gerar_str_figuras_repetidas()
+    '[3 (1), 4 (1), 13 (1), 33 (1), 58 (1), 76(1), 78 (1), 80 (1), 81 (1), 99 (1)]'
+    
+
     '''
+
+        
+    
+
 
     capacidade_album = 100000
     # A *capacidade_album* é uma limitacao que um album pode suportar
@@ -133,7 +172,6 @@ class Colecao:
         return represetacao_str + ']'
 
 
-
     def gerar_str_figuras_repetidas(self) -> str:
         '''
         Gerar uma representação em string das figurinhas presentes em um álbum, 
@@ -162,64 +200,98 @@ class Colecao:
                 represetacao_str += ', ' + str(self.album[i]) + f' ({self.album_repetidas[i]})'
         return represetacao_str + ']'
 
+
+
+    def troca(self, album1:Colecao, album2:Colecao):
+        '''
+        Realizar a troca máxima de figurinhas entre duas coleções, garantindo que cada
+        coleção obtenha as figurinhas que não possui.
         
+        Exemplos
+        >>> c1 = Colecao()
+        >>> c1.insercao(58)
+        >>> c1.insercao(58)
+        >>> c1.insercao(58)
+        >>> c1.insercao(9)
+        >>> c1.insercao(32)
+        >>> c1.insercao(32)
+        >>> c1.gerar_str_figuras_repetidas()
+        '[9 (1), 32 (2), 58 (3)]'
+        >>> c2 = Colecao()
+        >>> c2.insercao(60)
+        >>> c2.insercao(60)
+        >>> c2.insercao(60)
+        >>> c2.insercao(60)
+        >>> c2.insercao(4)
+        >>> c2.insercao(4)
+        >>> c2.gerar_str_figuras_repetidas()
+        '[4 (2), 60 (4)]'
+        >>> c1.troca(c1, c2)
+        >>> c1.gerar_str_figuras_repetidas()
+        '[4 (1), 32 (1), 58 (3), 60 (1)]'
+        >>> c2.gerar_str_figuras_repetidas()
+        '[4 (1), 9 (1), 32 (1), 60 (3)]'
+        '''
+
+        trocas_possiveis1 = array(self.capacidade_album, 0)
+        indice1 = 0
+        trocas_possiveis2 = array(self.capacidade_album, 0)
+        indice2 = 0
+
+        for num in album1.album:
+            if num == 0:
+                break
+            elif num not in album2.album:
+                trocas_possiveis1[indice1] = num
+                indice1 += 1
+
+        for num in album2.album:
+            if num == 0:
+                break
+            elif num not in album1.album:
+                trocas_possiveis2[indice2] = num
+                indice2 += 1
+
+        if indice1 <= indice2:
+            for i in range(indice1):
+                album1.insercao(trocas_possiveis2[i])
+                album2.insercao(trocas_possiveis1[i])
+                album1.remocao(trocas_possiveis1[i])
+                album2.remocao(trocas_possiveis2[i])
+        elif indice2 < indice1:
+            for i in range(indice2):
+                album1.insercao(trocas_possiveis2[i])
+                album2.insercao(trocas_possiveis1[i])
+                album1.remocao(trocas_possiveis1[i])
+                album2.remocao(trocas_possiveis2[i])
 
 
-    # def troca(self, p1:int, p2:int):
-    #     '''
-    #     Realizar a troca máxima de figurinhas entre duas coleções, garantindo que cada
-    #     coleção obtenha as figurinhas que não possui.
-        
-    #     Exemplos
-    #     # Usuario 1
-    #     >>> c1 = Colecao()
-    #     >>> c1.insercao(58)
-    #     >>> c1.insercao(58)
-    #     >>> c1.insercao(58)
-    #     >>> c1.insercao(9)
-    #     >>> c1.insercao(32)
-    #     >>> c1.insercao(32)
-    #     >>> c1.gerar_str_figuras_repetidas()
-    #     '[9 (1), 32 (2), 58 (3)]'
-        
-    #     >>> c2 = Colecao()
-    #     >>> c2.insercao(60)
-    #     >>> c2.insercao(60)
-    #     >>> c2.insercao(60)
-    #     >>> c2.insercao(60)
-    #     >>> c2.insercao(4)
-    #     >>> c2.insercao(4)
-    #     >>> c2.gerar_str_figuras_repetidas()
-    #     '[4 (2), 60 (4)]'
-        
-    #     >>> c1.troca(58, 60)
-    #     >>> c1.gerar_str_figuras_repetidas()
-    #     '[9 (1), 32 (2), 60 (3)]'
-    #     >>> c2.gerar_str_figuras_repetidas()
-    #     '[4 (2), 58 (3), 60 (1)]'
-    #     '''
+c = Colecao()
+c.insercao(78)
+c.insercao(13)
+c.insercao(58)
+c.insercao(80)         
+c.insercao(81)        
+c.insercao(3)
+c.insercao(4)
+c.insercao(3)
+c.insercao(78)
+c.insercao(80)
+print(c.gerar_str_figuras_repetidas())
 
+c1 = Colecao()
+c1.insercao(4)
+c1.insercao(78)
+c1.insercao(58)
+c1.insercao(81)
+c1.insercao(33)
+c1.insercao(33)
+c1.insercao(29)
+c1.insercao(76)
+c1.insercao(76)
+c1.insercao(99)
+print(c1.gerar_str_figuras_repetidas())
 
-    #     return
-
-
-
-# c = Colecao()
-
-# for i in range(10,0, -1):
-#     c.insercao(i)
-
-# c.insercao(4)
-# c.insercao(4)
-# c.insercao(8)
-# c.insercao(8)
-# c.insercao(1)
-# c.insercao(5)
-# c.insercao(3)
-# c.insercao(4)
-# c.insercao(10)
-# c.insercao(3)
-# c.remocao(5)
-# c.remocao(8)
-# c.remocao(8)
-# c.remocao(10)
+c1.troca(c1, c)
+print(c1.gerar_str_figuras_repetidas())
+print(c.gerar_str_figuras_repetidas())
