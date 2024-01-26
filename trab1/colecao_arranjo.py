@@ -7,7 +7,7 @@ class Colecao:
     usuarios.
     '''
 
-    capacidade_album = 10
+    capacidade_album = 5
     # A *capacidade_album* é uma limitacao que um album pode suportar
     # uma certa quantidade x de figurinhas nela.
 
@@ -46,25 +46,15 @@ class Colecao:
         "[2, 12, 33, 58, 75]"
          
         '''
+         
+        # Faz sentido ter esse erro? Pois como estou trabalhando com quantidade exata de figurinhas
+        # não há necessidade de ter essa erro, pois ele nunca vai passar do limite que foi fixado.
+        # if self.indice_album == self.capacidade_album:
+        #     raise ValueError('Albúm cheio!')
 
-        if self.indice_album == self.capacidade_album:
-            raise ValueError('Albúm cheio!')
-        
         if figurinha > self.capacidade_album or figurinha < 0:
             raise ValueError('Figurinha com enumeração inexistente!')
         
-
-
-        # for i in range(self.indice_album, -1, -1):
-        #     if figurinha not in self.album:
-        #         self.album[self.indice_album] = figurinha
-        #         self.indice_album += 1
-        #         self.album_repetidas[self.indice_album_repetidas] += 1
-        #         self.indice_album_repetidas += 1
-        #     else:
-        #         if figurinha == self.album[i]:
-        #             self.album_repetidas[i] += 1
-
         for i in range(self.indice_album, -1, -1):
             if figurinha not in self.album:
                 if figurinha < self.album[i - 1]:
@@ -78,29 +68,11 @@ class Colecao:
                     self.indice_album += 1
                     self.album_repetidas[self.indice_album_repetidas] += 1
                     break
-
             else: 
                 if figurinha == self.album[i]:
                     self.album_repetidas[i] += 1
 
-
         self.indice_album_repetidas += 1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     def remocao(self,figurinha:int) -> int:
@@ -214,10 +186,10 @@ class Colecao:
 
 
 
-c = Colecao()
+# c = Colecao()
 
 
-for i in range(10,0, -1):
-    c.insercao(i)
+# for i in range(10,0, -1):
+#     c.insercao(i)
 
 
