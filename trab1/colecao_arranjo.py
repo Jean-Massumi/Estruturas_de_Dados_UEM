@@ -19,7 +19,7 @@ class Colecao:
     >>> c.insercao(78)
     >>> c.insercao(80)
     >>> c.gerar_str_figuras_repetidas()
-    '[3 (2), 4 (1), 13 (1), 58(1), 78 (2), 80 (2), 81 (1)]'
+    '[3 (2), 4 (1), 13 (1), 58 (1), 78 (2), 80 (2), 81 (1)]'
     >>> c1 = Colecao()
     >>> c1.insercao(4)
     >>> c1.insercao(78)
@@ -32,23 +32,29 @@ class Colecao:
     >>> c1.insercao(76)
     >>> c1.insercao(99)
     >>> c1.gerar_str_figuras_repetidas()
-    '[4 (1), 29 (1), 33 (2), 58 (1), 76(2), 78 (1), 81 (1), 99 (1)]'
+    '[4 (1), 29 (1), 33 (2), 58 (1), 76 (2), 78 (1), 81 (1), 99 (1)]'
     >>> c1.troca(c, c1)
     >>> c.gerar_str_figuras_repetidas()
-    '[3 (1), 4 (1), 29(1), 33(1), 58(1), 76 (1), 78 (2), 80 (1), 81 (1)]'
+    '[3 (1), 4 (1), 29 (1), 33 (1), 58 (1), 76 (1), 78 (2), 80 (1), 81 (1)]'
     >>> c1.gerar_str_figuras_repetidas()
-    '[3 (1), 4 (1), 13 (1), 33 (1), 58 (1), 76(1), 78 (1), 80 (1), 81 (1), 99 (1)]'
-    
-
+    '[3 (1), 4 (1), 13 (1), 33 (1), 58 (1), 76 (1), 78 (1), 80 (1), 81 (1), 99 (1)]'
+    >>> c.remocao(4)
+    4
+    >>> c.remocao(58)
+    58
+    >>> c.remocao(76)
+    76
+    >>> c.remocao(78)
+    78
+    >>> c.gerar_str_figuras_repetidas()
+    '[3 (1), 29 (1), 33 (1), 78 (1), 80 (1), 81 (1)]'
+    >>> c.gerar_str_figuras()
+    '[3, 29, 33, 78, 80, 81]'
     '''
-
-        
-    
-
 
     capacidade_album = 100000
     # A *capacidade_album* é uma limitacao que um album pode suportar
-    # uma certa quantidade x de figurinhas nela.
+    # uma certa quantidade de figurinhas enumeradas(1,2,3,4...) nela.
 
 
     def __init__(self) :
@@ -60,7 +66,6 @@ class Colecao:
         self.indice_album = 0
         self.album_repetidas = array(self.capacidade_album + 1, 0)
         self.indice_album_repetidas = 0
-
 
 
     def insercao(self, figurinha:int):
@@ -264,34 +269,3 @@ class Colecao:
                 album2.insercao(trocas_possiveis1[i])
                 album1.remocao(trocas_possiveis1[i])
                 album2.remocao(trocas_possiveis2[i])
-
-
-c = Colecao()
-c.insercao(78)
-c.insercao(13)
-c.insercao(58)
-c.insercao(80)         
-c.insercao(81)        
-c.insercao(3)
-c.insercao(4)
-c.insercao(3)
-c.insercao(78)
-c.insercao(80)
-print(c.gerar_str_figuras_repetidas())
-
-c1 = Colecao()
-c1.insercao(4)
-c1.insercao(78)
-c1.insercao(58)
-c1.insercao(81)
-c1.insercao(33)
-c1.insercao(33)
-c1.insercao(29)
-c1.insercao(76)
-c1.insercao(76)
-c1.insercao(99)
-print(c1.gerar_str_figuras_repetidas())
-
-c1.troca(c1, c)
-print(c1.gerar_str_figuras_repetidas())
-print(c.gerar_str_figuras_repetidas())
