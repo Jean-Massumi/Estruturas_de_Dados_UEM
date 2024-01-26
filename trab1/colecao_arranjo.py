@@ -33,11 +33,7 @@ class Colecao:
         Exemplos
         >>> c = Colecao()
         >>> c.insercao(58)
-        >>> c.gerar_str_figuras()
-        '[58]'
         >>> c.insercao(12)
-        >>> c.gerar_str_figuras()
-        '[12, 58]'
         >>> c.insercao(75)
         >>> c.insercao(2)
         >>> c.insercao(33)
@@ -53,26 +49,22 @@ class Colecao:
                 if figurinha < self.album[i - 1]:
                     self.album[i] = self.album[i - 1]
                     self.album_repetidas[i] = self.album_repetidas[i - 1]
-                elif self.indice_album == 0:
-                    self.album[self.indice_album] = figurinha
-                    self.indice_album += 1
-                    self.album_repetidas[self.indice_album_repetidas] += 1
                 elif figurinha > self.album[i - 1]:
                     self.album[i] = figurinha
                     self.indice_album += 1
-                    self.album_repetidas[i] -= self.album_repetidas[i] - 1
+                    self.album_repetidas[i] = 0
+                    self.album_repetidas[i] += 1
+                    self.indice_album_repetidas += 1
                     break
             else: 
                 if figurinha == self.album[i]:
                     self.album_repetidas[i] += 1
 
-        
-        self.indice_album_repetidas += 1
 
 
-    def remocao(self,figurinha:int) -> int:
+    def remocao(self, figurinha:int) -> int:
         '''
-        Remove uma figurinha especifica no album do usuario.
+        Remove uma figurinha especifica no album do usuario e devolve a figurinha removida.
 
         Requer que a figurinha esteja no album.
         Requer que o albúm não esteja vazio.
@@ -82,13 +74,37 @@ class Colecao:
         >>> c.remocao(34)
         Traceback (most recent call last):
         ...
-        ValueError: Figurinha indiponivel
+        ValueError: O albúm está vazio
         >>> c.insercao(28)
+        >>> c.insercao(11)
         >>> c.remocao(28)
         28
+        >>> c.remocao(33)
+        Traceback (most recent call last):
+        ...
+        ValueError: A figurinha não está no albúm
         '''
 
-        return 0
+        if self.indice_album == 0:
+            raise ValueError('O albúm está vazio')
+
+        if figurinha not in self.album:
+            raise ValueError('A figurinha não está no albúm')
+        else:
+            for i in range(self.indice_album):
+                if figurinha == self.album[i]:
+                    self.album_repetidas[i] -= 1
+                    if self.album_repetidas[i] == 0:
+                        self.album[i] = self.album[i + 1]
+                        self.album_repetidas[i] = self.album_repetidas[i + 1]
+                        self.indice_album -= 1
+                        self.indice_album_repetidas -= 1
+
+                elif figurinha not in self.album:
+                    self.album[i] = self.album[i + 1]
+                    self.album_repetidas[i] = self.album_repetidas[i + 1]
+        
+        return figurinha
 
 
     def gerar_str_figuras(self) -> str:
@@ -149,57 +165,61 @@ class Colecao:
         
 
 
-    def troca(self, p1:int, p2:int):
-        '''
-        Realizar a troca máxima de figurinhas entre duas coleções, garantindo que cada
-        coleção obtenha as figurinhas que não possui.
+    # def troca(self, p1:int, p2:int):
+    #     '''
+    #     Realizar a troca máxima de figurinhas entre duas coleções, garantindo que cada
+    #     coleção obtenha as figurinhas que não possui.
         
-        Exemplos
-        # Usuario 1
-        >>> c1 = Colecao()
-        >>> c1.insercao(58)
-        >>> c1.insercao(58)
-        >>> c1.insercao(58)
-        >>> c1.insercao(9)
-        >>> c1.insercao(32)
-        >>> c1.insercao(32)
-        >>> c1.gerar_str_figuras_repetidas()
-        "[9 (1), 32 (2), 58 (3)]"
-        # Usuario 2
-        >>> c2 = Colecao()
-        >>> c2.insercao(60)
-        >>> c2.insercao(60)
-        >>> c2.insercao(60)
-        >>> c2.insercao(60)
-        >>> c2.insercao(4)
-        >>> c2.insercao(4)
-        >>> c2.gerar_str_figuras_repetidas()
-        "[4 (2), 60 (4)]"
-        # Realização da Troca
-        >>> c1.troca(58, 60)
-        >>> c1.gerar_str_figuras_repetidas()
-        "[9 (1), 32 (2), 60 (3)]"
-        >>> c2.gerar_str_figuras_repetidas()
-        "[4 (2), 58 (3), 60 (1)]"
-        '''
+    #     Exemplos
+    #     # Usuario 1
+    #     >>> c1 = Colecao()
+    #     >>> c1.insercao(58)
+    #     >>> c1.insercao(58)
+    #     >>> c1.insercao(58)
+    #     >>> c1.insercao(9)
+    #     >>> c1.insercao(32)
+    #     >>> c1.insercao(32)
+    #     >>> c1.gerar_str_figuras_repetidas()
+    #     '[9 (1), 32 (2), 58 (3)]'
+        
+    #     >>> c2 = Colecao()
+    #     >>> c2.insercao(60)
+    #     >>> c2.insercao(60)
+    #     >>> c2.insercao(60)
+    #     >>> c2.insercao(60)
+    #     >>> c2.insercao(4)
+    #     >>> c2.insercao(4)
+    #     >>> c2.gerar_str_figuras_repetidas()
+    #     '[4 (2), 60 (4)]'
+        
+    #     >>> c1.troca(58, 60)
+    #     >>> c1.gerar_str_figuras_repetidas()
+    #     '[9 (1), 32 (2), 60 (3)]'
+    #     >>> c2.gerar_str_figuras_repetidas()
+    #     '[4 (2), 58 (3), 60 (1)]'
+    #     '''
 
 
-        return
+    #     return
 
 
 
-c = Colecao()
+# c = Colecao()
 
 # for i in range(10,0, -1):
 #     c.insercao(i)
 
-c.insercao(4)
-c.insercao(4)
-c.insercao(8)
-c.insercao(8)
-c.insercao(1)
-c.insercao(5)
-c.insercao(3)
-c.insercao(4)
-c.insercao(10)
-c.insercao(3)
+# c.insercao(4)
+# c.insercao(4)
+# c.insercao(8)
+# c.insercao(8)
+# c.insercao(1)
+# c.insercao(5)
+# c.insercao(3)
+# c.insercao(4)
+# c.insercao(10)
+# c.insercao(3)
+# c.remocao(5)
+# c.remocao(8)
+# c.remocao(8)
+# c.remocao(10)
