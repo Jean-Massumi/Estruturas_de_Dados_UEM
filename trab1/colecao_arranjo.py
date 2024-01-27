@@ -52,7 +52,7 @@ class Colecao:
     '[3, 29, 33, 78, 80, 81]'
     '''
 
-    capacidade_album = 100000
+    capacidade_album = 100
     # A *capacidade_album* é uma limitacao que um album pode suportar
     # uma certa quantidade de figurinhas enumeradas(1,2,3,4...) nela.
 
@@ -88,21 +88,26 @@ class Colecao:
         if figurinha > self.capacidade_album or figurinha < 0:
             raise ValueError('Figurinha com enumeração inexistente!')
         
-        for i in range(self.indice_album, -1, -1):
-            if figurinha not in self.album:
-                if figurinha < self.album[i - 1]:
-                    self.album[i] = self.album[i - 1]
-                    self.album_repetidas[i] = self.album_repetidas[i - 1]
-                elif figurinha > self.album[i - 1]:
-                    self.album[i] = figurinha
-                    self.indice_album += 1
-                    self.album_repetidas[i] = 0
-                    self.album_repetidas[i] += 1
-                    self.indice_album_repetidas += 1
-                    break
-            else: 
-                if figurinha == self.album[i]:
-                    self.album_repetidas[i] += 1
+        if self.indice_album == 0 or figurinha > self.album[self.indice_album - 1] :
+            self.album[self.indice_album] = figurinha   
+            self.indice_album += 1
+            self.album_repetidas[self.indice_album_repetidas] += 1
+            self.indice_album_repetidas += 1
+        else:
+            for i in range(self.indice_album, -1, -1):
+                if figurinha not in self.album:
+                    if figurinha < self.album[i - 1]:
+                        self.album[i] = self.album[i - 1]
+                        self.album_repetidas[i] = self.album_repetidas[i - 1]
+                    elif figurinha > self.album[i - 1]:
+                        self.album[i] = figurinha
+                        self.indice_album += 1
+                        self.album_repetidas[i] = 0
+                        self.album_repetidas[i] += 1
+                        self.indice_album_repetidas += 1
+                else: 
+                    if figurinha == self.album[i]:
+                        self.album_repetidas[i] += 1
 
 
 
