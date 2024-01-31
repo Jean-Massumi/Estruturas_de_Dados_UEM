@@ -80,6 +80,7 @@ class Colecoes:
         >>> c.gerar_str_figuras()
         "[2, 12, 33, 58, 75]"
         '''
+        
 
 
     def remocao(self,figurinha:int) -> int:

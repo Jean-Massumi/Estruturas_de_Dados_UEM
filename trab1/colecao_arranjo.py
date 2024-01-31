@@ -59,7 +59,10 @@ class Colecao:
 
     def __init__(self) :
         '''
-        Criação de uma coleção com a quantidade de figurinhas(número de figurinhas total do albúm)
+        Cria um album com *capacidade_album* e outro para armazenar a quantidade de repetidas contidas no   
+        primeiro albúm.
+
+        Os albúns devem ter uma contagem de indice para saber quantas novas figuras foram adicionada no array.
         '''
 
         self.album = array(self.capacidade_album + 1, 0)
@@ -70,7 +73,7 @@ class Colecao:
 
     def insercao(self, figurinha:int):
         '''
-        Insere uma figurinha especifica no album do usuario
+        Insere e ordena uma figurinha especifica no album do usuario.
 
         Requer que 0 < numerações das figurinhas < *capacidade_album*
         
