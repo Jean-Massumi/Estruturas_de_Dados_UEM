@@ -13,12 +13,12 @@ def item(lista:list):
 
     Exemplos
     >>> item([2,8,1,5])
-    No(item=2, prox=No(item=8, prox=No(item=1, prox=No(item=5, prox=None))))
+    No(item=5, prox=No(item=1, prox=No(item=8, prox=No(item=2, prox=None))))
     '''
 
-    p = No(lista[0], None)
+    p = No(lista[-1], None)
     q = p
-    for i in range(1, len(lista)):
+    for i in range(len(lista) - 2, -1, -1):
         q.prox = No(lista[i], None)
         q = q.prox
     return p
