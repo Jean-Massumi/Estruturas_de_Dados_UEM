@@ -1,7 +1,7 @@
 from __future__ import annotations
 from ed import array
 
-class Colecoes:
+class Colecao:
     '''
     Uma Coleção de figurinhas que permite gerenciar os álbuns e fazer trocas com os 
     usuarios.
@@ -60,6 +60,8 @@ class Colecoes:
         Os albúns devem ter uma contagem de indice para saber quantas novas figuras foram adicionada no array.
         '''
 
+        return NotImplemented
+
 
     def insere(self, figurinha:int):
         '''
@@ -77,6 +79,8 @@ class Colecoes:
         >>> c.exibir_figuras()
         "[2, 12, 33, 58, 75]"
         '''
+
+        return NotImplemented
 
 
     def remove(self,figurinha:int) -> int:
@@ -102,11 +106,13 @@ class Colecoes:
         ValueError: A figurinha não está no albúm
         '''
 
+        return NotImplemented
+
 
     def exibir_figuras(self) -> str:
         '''
         Gera uma representação em string das figurinhas presentes em um álbum, 
-        sem considerar repetições.
+        sem considerar as repetidas de cada figurinha.
 
         Exemplos
         >>> c = Colecao(100)
@@ -121,11 +127,13 @@ class Colecoes:
         "[9, 58]"
         '''
 
+        return NotImplemented
+
 
     def exibir_repetidas(self) -> str:
         '''
         Gerar uma representação em string das figurinhas presentes em um álbum, 
-        indicando a quantidade de repetições.
+        indicando a quantidade de repetidas de cada figurinha.
 
         Exemplos
         >>> c = Colecao(100)
@@ -143,8 +151,10 @@ class Colecoes:
         "[9 (1), 32 (1), 58 (3)]"
         '''
 
+        return NotImplemented
 
-    def troca(self, album1:int, album2:int):
+
+    def troca(self, album1:Colecao, album2:Colecao):
         '''
         Realizar a troca máxima de figurinhas entre duas coleções, garantindo que cada
         coleção obtenha as figurinhas que não possui.
@@ -174,3 +184,5 @@ class Colecoes:
         >>> c2.exibir_repetidas()
         '[4 (1), 9 (1), 32 (1), 60 (3)]'
         '''
+
+        return NotImplemented

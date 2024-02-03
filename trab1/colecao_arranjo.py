@@ -115,7 +115,6 @@ class Colecao:
                     self.repetidas[i] += 1
 
 
-
     def remove(self, figurinha:int) -> int:
         '''
         Remove uma figurinha especifica no album do 
@@ -174,7 +173,7 @@ class Colecao:
     def exibir_figuras(self) -> str:
         '''
         Gera uma representação em string das figurinhas presentes em um álbum, 
-        sem considerar repetições.
+        sem considerar as repetidas de cada figurinha.
 
         Exemplos
         >>> c = Colecao(100)
@@ -200,7 +199,7 @@ class Colecao:
     def exibir_repetidas(self) -> str:
         '''
         Gerar uma representação em string das figurinhas presentes em um álbum, 
-        indicando a quantidade de repetições.
+        indicando a quantidade de repetidas de cada figurinha.
 
         Exemplos
         >>> c = Colecao(100)
