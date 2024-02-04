@@ -97,8 +97,7 @@ class Colecao:
             referencia = self.album
             inserido = True
 
-            while inserido:
-                            
+            while inserido:  
                 if figurinha == referencia.figurinha:
                     referencia.repetidas += 1
                     inserido = False
@@ -168,11 +167,13 @@ class Colecao:
                     referencia.prox.antes = referencia.antes.prox
                     self.quantidade -= 1
 
+                if self.quantidade == 0:
+                    self.album = None
+
                 removido = False
             else:   
                 if referencia.prox is None:
                     raise ValueError('Figurinha inesistente!')
-
 
             referencia = referencia.prox
 
@@ -238,7 +239,7 @@ class Colecao:
         return represetacao_str + ']'
 
 
-    def troca(self, album1:int, album2:int):
+    def troca(self, album1:Colecao, album2:Colecao):
         '''
         Realizar a troca máxima de figurinhas entre duas coleções, garantindo que cada
         coleção obtenha as figurinhas que não possui.
@@ -270,21 +271,158 @@ class Colecao:
         '''
 
 
+        copia_album1 = self.copia(album1.album)
+        qtd_figurinhas1 = album1.quantidade
+        copia_album2 = self.copia(album2.album)
+        qtd_figurinhas2 = album2.quantidade
+
+        referencia1 = copia_album1
+        referencia2 = copia_album2
+
+        ref1 = album1.album
+        ref2 = album2.album
+    
+        while ref1.prox is not None:
+            inserido = False
+            ref2 = album2.album
+            while not inserido:
+                if ref2 is None:
+                    break
+                elif ref1.figurinha == ref2.figurinha:  
+                    qtd_figurinhas1 -= 1
+                    qtd_figurinhas2 -= 1
+                    
+                    inserido = True
+                ref2 = ref2.prox
+            ref1 = ref1.prox
+
+
+
+        ref1 = album1.album
+        ref2 = album2.album
+        concluido = False
+        adiciona1 = 1
+        meta = 0
+        if qtd_figurinhas1 < qtd_figurinhas2:
+            while meta != qtd_figurinhas1:
+                referencia2 = copia_album2
+                while referencia2.prox is not None:
+                    if referencia2.prox == None:
+                        break
+
+                    elif referencia1.figurinha != referencia2.figurinha and not concluido:
+                        album2.insere(album1.album.figurinha)
+
+                        meta += 1
+                    elif referencia1.figurinha == referencia2.figurinha:
+                        album2.remove(album1.album.figurinha)
+        
+                        meta -= 1
+                
+                        if referencia1.figurinha == referencia2.figurinha and adiciona1 != 0:
+                            album1.insere(referencia2.figurinha)
+                            meta += 1
+                            adiciona1 -= 1
+                
+            
+                    referencia2 = referencia2.prox
+                concluido = True
+                referencia1 = referencia1.prox
+                        
+
+        elif qtd_figurinhas2 < qtd_figurinhas1:
+            while meta != qtd_figurinhas2:
+                referencia1 = copia_album1
+                while referencia1.prox is not None:
+                    if referencia1.prox == None:
+                        break
+
+                    elif referencia2.figurinha != referencia1.figurinha and not concluido:
+                        album1.insere(referencia2.figurinha)
+                        album2.insere(referencia1.figurinha)
+                        meta += 1
+                    elif referencia2.figurinha == referencia1.figurinha:
+                        album1.remove(referencia2.figurinha)
+                        album2.remove(referencia1.figurinha)
+                        meta -= 1
+                
+                        if referencia2.figurinha == referencia1.figurinha and adiciona1 != 0:
+                            album1.insere(referencia2.figurinha)
+                            meta += 1
+                            adiciona1 -= 1
+            
+                    referencia1 = referencia1.prox
+                concluido = True
+                referencia2 = referencia2.prox
+
+
+
+    def copia(self, no: No) -> No:
+        '''
+        Cria uma copia do encadeamento de entrada.
+        '''
+        copia = None
+        while no.prox is not None:
+            
+            if copia is None:
+                copia = No(None, no.figurinha, +1, None)      # type: ignore
+
+            else:
+                referencia = copia
+                inserido = True
+
+                while inserido:  
+                    if no.figurinha == referencia.figurinha:
+                        referencia.repetidas += 1
+                        inserido = False
+
+                    elif no.figurinha < referencia.figurinha and referencia.antes is None:
+                        referencia.antes = No(None, no.figurinha, +1, referencia)
+                        copia = referencia.antes
+                        inserido = False
+
+                    elif no.figurinha < referencia.figurinha and referencia.antes is not None:
+                        referencia.antes.prox = No(referencia.antes, no.figurinha, +1, referencia)
+                        referencia.antes = referencia.antes.prox
+                        inserido = False
+                                
+                    elif referencia.prox is None and referencia.figurinha < no.figurinha:
+                        referencia.prox = No(referencia, no.figurinha, +1, None)
+                        inserido = False
+
+                    referencia = referencia.prox
+            no = no.prox
+
+        return copia
+
 
 
 # c = Colecao(100)
-# c.insere(3)
-# c.insere(7)
-# c.insere(4)
-# c.insere(32)
 # c.insere(1)
-# c.insere(7)
-# c.insere(5)
-# c.remove(1)
-# c.remove(32)
-# c.remove(4)
-# c.remove(7)
-# c.remove(3)
-# c.insere(6)
-# c.insere(11)
-# c.insere(2)
+# c.insere(78)
+# c.insere(13)
+# c.insere(58)
+# c.insere(80)          
+# c.insere(81)         
+# c.insere(3)
+# c.insere(4)
+# c.insere(3)
+# c.insere(78)
+# c.insere(80)
+# c1 = Colecao(100)
+# c1.insere(1)
+# c1.insere(4)
+# c1.insere(78)
+# c1.insere(58)
+# c1.insere(81)          
+# c1.insere(33)       
+# c1.insere(33)
+# c1.insere(29)
+# c1.insere(76)
+# c1.insere(76)
+# c1.insere(99)
+# c1.troca(c, c1)
+# c.exibir_repetidas()
+# '[3 (1), 4 (1), 29 (1), 33 (1), 58 (1), 76 (1), 78 (2), 80 (1), 81 (1)]'
+# c1.exibir_repetidas()
+# '[3 (1), 4 (1), 13 (1), 33 (1), 58 (1), 76 (1), 78 (1), 80 (1), 81 (1), 99 (1)]'
