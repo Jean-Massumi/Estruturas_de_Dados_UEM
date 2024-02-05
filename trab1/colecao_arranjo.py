@@ -56,7 +56,7 @@ class Colecao:
 
     def insere(self, figurinha:int):
         '''
-        Insere e ordena uma figurinha especifica no album do usuario.
+        Insere uma figurinha especifica e ordena o album do usuario.
 
         Requer que 0 < numerações das figurinhas < *capacidade_album*
         
@@ -176,7 +176,7 @@ class Colecao:
     def exibir_repetidas(self) -> str:
         '''
         Gerar uma representação em string das figurinhas presentes em um álbum, 
-        indicando a quantidade de repetidas de cada figurinha.
+        indicando a quantidade somente das figurinhas repetidas > 1.
 
         Exemplos
         >>> c = Colecao(100)

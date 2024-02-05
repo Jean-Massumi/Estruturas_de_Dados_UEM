@@ -39,10 +39,7 @@ class Colecao:
 
     def __init__(self, capacidade:int) :
         '''
-        Cria um album com *capacidade* e outro para armazenar a quantidade de repetidas contidas 
-        no primeiro albúm.
-
-        Os albúns devem ter uma contagem de indice para saber quantas novas figuras foram adicionada no array.
+        Cria um album.
         '''
 
         return NotImplemented
@@ -50,7 +47,7 @@ class Colecao:
 
     def insere(self, figurinha:int):
         '''
-        Insere uma figurinha especifica no album do usuario
+        Insere uma figurinha especifica e ordena o album do usuario
 
         Requer que 0 < numerações das figurinhas < *capacidade_album*
 
@@ -122,7 +119,7 @@ class Colecao:
     def exibir_repetidas(self) -> str:
         '''
         Gerar uma representação em string das figurinhas presentes em um álbum, 
-        indicando a quantidade de repetidas de cada figurinha.
+        indicando a quantidade somente das figurinhas repetidas > 1.
 
         Exemplos
         >>> c = Colecao(100)
