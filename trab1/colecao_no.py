@@ -69,62 +69,12 @@ class Colecao:
         self.quantidade = 0
         self.capacidade = capacidade
 
-    # def insere(self, figurinha:int):
-    #     '''
-    #     Insere uma figurinha especifica no album do usuario
-
-    #     Requer que 0 < numerações das figurinhas < *capacidade_album*
-
-    #     Exemplos
-    #     >>> c = Colecao(100)
-    #     >>> c.insere(58)
-    #     >>> c.insere(12)
-    #     >>> c.insere(75)
-    #     >>> c.insere(2)
-    #     >>> c.insere(33)
-    #     >>> c.exibir_figuras()
-    #     '[2, 12, 33, 58, 75]'
-    #     '''
-
-    #     if 0 > figurinha > self.capacidade:
-    #         raise ValueError('A figurinha não está no albúm')
-        
-    #     if self.album is None:
-    #         self.album = No(None, figurinha, +1, None)      # type: ignore
-    #         self.quantidade += 1
-
-    #     else:
-    #         referencia = self.album
-    #         inserido = True
-
-    #         while inserido:  
-    #             if figurinha == referencia.figurinha:
-    #                 referencia.repetidas += 1
-    #                 inserido = False
-
-    #             elif figurinha < referencia.figurinha and referencia.antes is None:       
-    #                 referencia.antes = No(None, figurinha, +1, referencia)
-    #                 self.album = referencia.antes
-    #                 self.quantidade += 1
-    #                 inserido = False
-
-    #             elif figurinha < referencia.figurinha and referencia.antes is not None:
-    #                 referencia.antes.prox = No(referencia.antes, figurinha, +1, referencia)
-    #                 referencia.antes = referencia.antes.prox
-    #                 self.quantidade += 1
-    #                 inserido = False
-                            
-    #             elif referencia.prox is None and referencia.figurinha < figurinha:
-    #                 referencia.prox = No(referencia, figurinha, +1, None)
-    #                 self.quantidade += 1
-    #                 inserido = False
-
-    #             referencia = referencia.prox
-            
-
-
-    def insere(self, figurinha: int):
+    def insere(self, figurinha:int):
         '''
+        Insere uma figurinha especifica no album do usuario
+
+        Requer que 0 < numerações das figurinhas < *capacidade_album*
+
         Exemplos
         >>> c = Colecao(100)
         >>> c.insere(58)
@@ -135,112 +85,56 @@ class Colecao:
         >>> c.exibir_figuras()
         '[2, 12, 33, 58, 75]'
         '''
+
+        if 0 > figurinha > self.capacidade:
+            raise ValueError('A figurinha não está no albúm')
         
-        
-
-        if not (0 < figurinha < self.capacidade):
-            raise ValueError('A figurinha não está no álbum')
-
-        novo_no = No(None, figurinha, 1, None)
-
         if self.album is None:
-            self.album = novo_no
+            self.album = No(None, figurinha, +1, None)      # type: ignore
             self.quantidade += 1
-            return
 
-        anterior = None
-        atual = self.album
-
-        while atual is not None and figurinha > atual.figurinha:
-            anterior = atual
-            atual = atual.prox
-
-        if atual is not None and figurinha == atual.figurinha:
-            atual.repetidas += 1
         else:
-            novo_no.prox = atual
-            novo_no.antes = anterior
+            referencia = self.album
+            inserido = True
 
-            if anterior is not None:
-                anterior.prox = novo_no
-            else:
-                self.album = novo_no
+            while inserido:  
+                if figurinha == referencia.figurinha:
+                    referencia.repetidas += 1
+                    inserido = False
 
-            if atual is not None:
-                atual.antes = novo_no
+                elif figurinha < referencia.figurinha and referencia.antes is None:       
+                    referencia.antes = No(None, figurinha, +1, referencia)
+                    self.album = referencia.antes
+                    self.quantidade += 1
+                    inserido = False
 
-            self.quantidade += 1
+                elif figurinha < referencia.figurinha and referencia.antes is not None:
+                    referencia.antes.prox = No(referencia.antes, figurinha, +1, referencia)
+                    referencia.antes = referencia.antes.prox
+                    self.quantidade += 1
+                    inserido = False
+                            
+                elif referencia.prox is None and referencia.figurinha < figurinha:
+                    referencia.prox = No(referencia, figurinha, +1, None)
+                    self.quantidade += 1
+                    inserido = False
 
-
-
-
-    # def remove(self,figurinha:int) -> int:
-    #     '''
-    #     Remove uma figurinha especifica no album do usuario.
-
-    #     Requer que a figurinha esteja no album.
-    #     Requer que o albúm não esteja vazio.
-
-    #     Exemplos
-    #     >>> c = Colecao(100)
-    #     >>> c.remove(34)
-    #     Traceback (most recent call last):
-    #     ...
-    #     ValueError: O albúm está vazio
-    #     >>> c.insere(28)
-    #     >>> c.insere(11)
-    #     >>> c.remove(28)
-    #     28
-    #     >>> c.remove(33)
-    #     Traceback (most recent call last):
-    #     ...
-    #     ValueError: Figurinha inesistente!
-    #     '''
-
-    #     if self.album is None:
-    #         raise ValueError('O albúm está vazio')
-        
-    #     removido = True
-    #     referencia = self.album
-    #     while removido: 
-    #         if figurinha == referencia.figurinha:
-    #             referencia.repetidas -= 1
-    #             if referencia.repetidas == 0 and referencia.antes is None:
-    #                 referencia.prox.antes = None
-    #                 self.album = referencia.prox
-    #                 self.quantidade -= 1
-
-    #             elif referencia.repetidas == 0 and referencia.prox is None:
-    #                 referencia.antes.prox = None
-    #                 self.quantidade -= 1
-                    
-    #             elif referencia.repetidas == 0 and referencia.antes is not None:
-    #                 referencia.antes.prox = referencia.prox
-    #                 referencia.prox.antes = referencia.antes.prox
-    #                 self.quantidade -= 1
-
-    #             if self.quantidade == 0:
-    #                 self.album = None
-
-    #             removido = False
-    #         else:   
-    #             if referencia.prox is None:
-    #                 raise ValueError('Figurinha inesistente!')
-
-    #         referencia = referencia.prox
-
-    #     return figurinha
+                referencia = referencia.prox
             
 
-
-    def remove(self, figurinha: int) -> int:
+    def remove(self,figurinha:int) -> int:
         '''
+        Remove uma figurinha especifica no album do usuario.
+
+        Requer que a figurinha esteja no album.
+        Requer que o albúm não esteja vazio.
+
         Exemplos
         >>> c = Colecao(100)
         >>> c.remove(34)
         Traceback (most recent call last):
         ...
-        ValueError: O album está vazio
+        ValueError: O albúm está vazio
         >>> c.insere(28)
         >>> c.insere(11)
         >>> c.remove(28)
@@ -248,38 +142,42 @@ class Colecao:
         >>> c.remove(33)
         Traceback (most recent call last):
         ...
-        ValueError: Figurinha inexistente!
-
-
+        ValueError: Figurinha inesistente!
         '''
-        if self.album is None:
-            raise ValueError('O album está vazio')
 
+        if self.album is None:
+            raise ValueError('O albúm está vazio')
+        
+        removido = True
         referencia = self.album
-        while referencia is not None:
+        while removido: 
             if figurinha == referencia.figurinha:
                 referencia.repetidas -= 1
-
-                if referencia.repetidas == 0:
-                    if referencia.antes is None:
-                        self.album = referencia.prox
-                    else:
-                        referencia.antes.prox = referencia.prox
-
-                    if referencia.prox is not None:
-                        referencia.prox.antes = referencia.antes
-
+                if referencia.repetidas == 0 and referencia.antes is None:
+                    referencia.prox.antes = None
+                    self.album = referencia.prox
                     self.quantidade -= 1
 
-                    if self.quantidade == 0:
-                        self.album = None
+                elif referencia.repetidas == 0 and referencia.prox is None:
+                    referencia.antes.prox = None
+                    self.quantidade -= 1
+                    
+                elif referencia.repetidas == 0 and referencia.antes is not None:
+                    referencia.antes.prox = referencia.prox
+                    referencia.prox.antes = referencia.antes.prox
+                    self.quantidade -= 1
 
-                return figurinha
+                if self.quantidade == 0:
+                    self.album = None
+
+                removido = False
+            else:   
+                if referencia.prox is None:
+                    raise ValueError('Figurinha inesistente!')
 
             referencia = referencia.prox
 
-        raise ValueError('Figurinha inexistente!')
-
+        return figurinha
 
 
     def exibir_figuras(self) -> str:
@@ -407,7 +305,7 @@ class Colecao:
                     meta += 1
                 no_atual = no_atual.prox
 
-            meta = 0
+            # meta = 0
             no_atual = copia_album1
             while no_atual is not None and meta != qtd_figurinhas1:
                 # Verifica se o valor já está na lista de destino
@@ -457,57 +355,48 @@ class Colecao:
         '''
         Cria uma copia do encadeamento de entrada.
         '''
-        copia = None
-        while no.prox is not None:
-            
-            if copia is None:
-                copia = No(None, no.figurinha, +1, None)      # type: ignore
 
-            else:
-                referencia = copia
-                inserido = True
+        copia3 = None
 
-                while inserido:  
-                    if no.figurinha == referencia.figurinha:
-                        referencia.repetidas += 1
-                        inserido = False
+        while no is not None:
+            if not self.valor_existe_no(copia3, no.figurinha):
+                if copia3 is None:
+                    copia3 = No(None, no.figurinha, 1, None)
+                else:
+                    referencia = copia3
 
-                    elif no.figurinha < referencia.figurinha and referencia.antes is None:
-                        referencia.antes = No(None, no.figurinha, +1, referencia)
-                        copia = referencia.antes
-                        inserido = False
+                    while referencia.prox is not None:
+                        referencia = referencia.prox
 
-                    elif no.figurinha < referencia.figurinha and referencia.antes is not None:
-                        referencia.antes.prox = No(referencia.antes, no.figurinha, +1, referencia)
-                        referencia.antes = referencia.antes.prox
-                        inserido = False
-                                
-                    elif referencia.prox is None and referencia.figurinha < no.figurinha:
-                        referencia.prox = No(referencia, no.figurinha, +1, None)
-                        inserido = False
+                    referencia.prox = No(referencia, no.figurinha, 1, None)
 
-                    referencia = referencia.prox
             no = no.prox
-
-        return copia
-
+        return copia3
 
 c = Colecao(100)
+c.insere(78)
+c.insere(13)
 c.insere(58)
-c.insere(58)
-c.insere(58)
-c.insere(9)          
-c.insere(32)         
-c.insere(32)
+c.insere(80)          
+c.insere(81)         
+c.insere(3)
+c.insere(4)
+c.insere(3)
+c.insere(78)
+c.insere(80)
 c1 = Colecao(100)
-c1.insere(60)
-c1.insere(60)
-c1.insere(60)
-c1.insere(60)          
-c1.insere(4)       
 c1.insere(4)
+c1.insere(78)
+c1.insere(58)
+c1.insere(81)          
+c1.insere(33)       
+c1.insere(33)
+c1.insere(29)
+c1.insere(76)
+c1.insere(76)
+c1.insere(99)
 c1.troca(c, c1)
 c.exibir_repetidas()
-'[4 (1), 32 (1), 58 (3), 60 (1)]'
+'[3 (1), 4 (1), 29 (1), 33 (1), 58 (1), 76 (1), 78 (2), 80 (1), 81 (1)]'
 c1.exibir_repetidas()
 '[3 (1), 4 (1), 13 (1), 33 (1), 58 (1), 76 (1), 78 (1), 80 (1), 81 (1), 99 (1)]'
