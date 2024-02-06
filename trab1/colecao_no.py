@@ -23,8 +23,11 @@ class Colecao:
     >>> c.insere(3)
     >>> c.insere(78)
     >>> c.insere(80)
+    >>> c.exibir_figuras()
+    '[3, 4, 78, 80]'
     >>> c.exibir_repetidas()
     '[3 (2), 78 (1), 80 (1)]'
+
     >>> c1 = Colecao(100)
     >>> c1.insere(29)
     >>> c1.insere(4)
@@ -35,13 +38,33 @@ class Colecao:
     >>> c1.insere(80)
     >>> c1.insere(80)
     >>> c1.insere(99)
+    >>> c1.exibir_figuras()
+    '[4, 29, 33, 80, 99]'
     >>> c1.exibir_repetidas()
     '[29 (2), 33 (1), 80 (1)]'
+    
     >>> c1.troca(c)
     >>> c.exibir_figuras()
     '[3, 4, 29, 33, 78, 80]'
+    >>> c.exibir_repetidas()
+    '[3 (1), 80 (1)]'
+    >>> c.remove(3)
+    3
+    >>> c.remove(80)
+    80
+    >>> c.exibir_repetidas()
+    '[]'
+
     >>> c1.exibir_figuras()
     '[3, 4, 29, 33, 78, 80, 99]'
+    >>> c1.exibir_repetidas()
+    '[29 (1), 80 (1)]'
+    >>> c1.remove(29)
+    29
+    >>> c1.remove(80)
+    80
+    >>> c1.exibir_repetidas()
+    '[]'
     '''
 
     album : No | None
@@ -49,12 +72,12 @@ class Colecao:
 
     def __init__(self, capacidade:int) :
         '''
-        Cria um albúm que pode suportar até certa *capacidade*.
-        Cria uma *quantidade*, para gerenciar quantas figurinhas 
-        sem contar as repetidas há no albúm.
+        Cria um albúm vazio que pode suportar até certa *capacidade*.
         '''
         self.album = None
         self.quantidade = 0
+        # Cria uma *quantidade*, para gerenciar quantas figurinhas 
+        # sem contar as repetidas há no albúm.
         self.capacidade = capacidade
 
 
@@ -116,8 +139,8 @@ class Colecao:
         Remove uma figurinha especifica no album do usuario.
 
         Requer que a figurinha esteja no album.
-        Requer que o albúm não esteja vazio.
         Requer que haja figurinhas repetidas para remover.
+        Requer que o albúm não esteja vazio.
 
         Exemplos
         >>> c = Colecao(100)
@@ -171,8 +194,6 @@ class Colecao:
         >>> c.insere(32)
         >>> c.exibir_figuras()
         '[9, 32, 58]'
-        >>> c.remove(32)
-        32
         ''' 
 
         referencia = self.album
@@ -188,7 +209,7 @@ class Colecao:
     def exibir_repetidas(self) -> str:
         '''
         Gerar uma representação em string das figurinhas presentes em um álbum, 
-        indicando a quantidade somente das figurinhas repetidas > 1.
+        representando as figurinhas repetidas na coleção
 
         Exemplos
         >>> c = Colecao(100)
@@ -216,6 +237,7 @@ class Colecao:
                     # uma organizacao na hora de exibir.
                     represetacao_str += str(referencia.figurinha) + f' ({referencia.repetidas -1})'    # type: ignore
                     caso1 = True
+
                 elif referencia.repetidas > 1:
                     represetacao_str += ', ' + str(referencia.figurinha) + f' ({referencia.repetidas -1})'    
                 referencia = referencia.prox                                                # type: ignore 
@@ -235,8 +257,11 @@ class Colecao:
         >>> c1.insere(9)
         >>> c1.insere(32)
         >>> c1.insere(32)
+        >>> c1.exibir_figuras()
+        '[9, 32, 58]'
         >>> c1.exibir_repetidas()
         '[32 (1), 58 (2)]'
+
         >>> c2 = Colecao(100)
         >>> c2.insere(60)
         >>> c2.insere(60)
@@ -244,13 +269,21 @@ class Colecao:
         >>> c2.insere(60)
         >>> c2.insere(4)
         >>> c2.insere(4)
+        >>> c2.exibir_figuras()
+        '[4, 60]'
         >>> c2.exibir_repetidas()
         '[4 (1), 60 (3)]'
+
         >>> c1.troca(c2)
         >>> c1.exibir_figuras()
         '[4, 9, 32, 58, 60]'
+        >>> c1.exibir_repetidas()
+        '[58 (1)]'
+
         >>> c2.exibir_figuras()
         '[4, 32, 58, 60]'
+        >>> c2.exibir_repetidas()
+        '[60 (2)]'
         '''
 
         troca_maxima1 = album1.quantidade
@@ -259,31 +292,31 @@ class Colecao:
         ref1 = album1.album
 
         while ref1 is not None:
-            if self.valor_existe_no(self.album, ref1.figurinha):
+            if self.__valor_existe_no(self.album, ref1.figurinha):
                 troca_maxima1 -= 1
                 troca_maxima2 -= 1
             ref1 = ref1.prox
 
         if troca_maxima1 <= troca_maxima2:
-            self.auxilia_trocas(album1, troca_maxima1)
+            self.__auxilia_trocas(album1, troca_maxima1)
 
         else:
-            self.auxilia_trocas(album1, troca_maxima2)
+            self.__auxilia_trocas(album1, troca_maxima2)
         
 
-    def auxilia_trocas(self, album:Colecao, maximo_troca:int):
+    def __auxilia_trocas(self, album:Colecao, maximo_troca:int):
         '''
         Devolve as trocas maximas de dois albuns.
         '''
 
-        copia_album1 = self.copia(album.album)
-        copia_album2 = self.copia(self.album)
+        copia_album1 = self.__copia(album.album)
+        copia_album2 = self.__copia(self.album)
 
         meta = 0
         no_atual: No | None = copia_album2
         while no_atual is not None and meta != maximo_troca:
             # Verifica se o valor já está na lista de destino
-            if not self.valor_existe_no(copia_album1, no_atual.figurinha) and copia_album2.repetidas > 1:    # type:ignore
+            if not self.__valor_existe_no(copia_album1, no_atual.figurinha) and copia_album2.repetidas > 1:    # type:ignore
                 album.insere(no_atual.figurinha)
                 self.remove(no_atual.figurinha)
                 meta += 1
@@ -294,7 +327,7 @@ class Colecao:
         no_atual = copia_album1
         while no_atual is not None and meta != maximo_troca:
             # Verifica se o valor já está na lista de destino
-            if not self.valor_existe_no(copia_album2, no_atual.figurinha)  and copia_album1.repetidas > 1:   # type:ignore
+            if not self.__valor_existe_no(copia_album2, no_atual.figurinha)  and copia_album1.repetidas > 1:   # type:ignore
                 self.insere(no_atual.figurinha)
                 album.remove(no_atual.figurinha)
                 meta += 1
@@ -302,9 +335,9 @@ class Colecao:
             copia_album1 = copia_album1.prox            # type:ignore
 
     
-    def valor_existe_no(self, no: No | None, item):
+    def __valor_existe_no(self, no: No | None, item):
         '''
-            Verifica se um valor de uma lista encadeada existe em uma outra lista encadeada. 
+            Verifica se uma figurinha existe em um outro album. 
         '''
 
         no_atual = no
@@ -315,7 +348,7 @@ class Colecao:
         return False
 
 
-    def copia(self, no: No | None) -> No | None:
+    def __copia(self, no: No | None) -> No | None:
         '''
         Cria uma copia do encadeamento de entrada.
         '''
@@ -323,7 +356,7 @@ class Colecao:
         copia3 = None
 
         while no is not None:
-            if not self.valor_existe_no(copia3, no.figurinha):
+            if not self.__valor_existe_no(copia3, no.figurinha):
                 if copia3 is None:
                     if no.repetidas > 1:
                         copia3 = No(None, no.figurinha, 2, None)

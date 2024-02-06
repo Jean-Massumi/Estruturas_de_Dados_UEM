@@ -7,6 +7,7 @@ class Colecao:
     o álbum e fazer trocas com os usuarios.
 
     Exemplos
+    Exemplos
     >>> c = Colecao(100)
     >>> c.insere(78)
     >>> c.insere(80)          
@@ -16,8 +17,11 @@ class Colecao:
     >>> c.insere(3)
     >>> c.insere(78)
     >>> c.insere(80)
+    >>> c.exibir_figuras()
+    '[3, 4, 78, 80]'
     >>> c.exibir_repetidas()
     '[3 (2), 78 (1), 80 (1)]'
+
     >>> c1 = Colecao(100)
     >>> c1.insere(29)
     >>> c1.insere(4)
@@ -28,25 +32,43 @@ class Colecao:
     >>> c1.insere(80)
     >>> c1.insere(80)
     >>> c1.insere(99)
+    >>> c1.exibir_figuras()
+    '[4, 29, 33, 80, 99]'
     >>> c1.exibir_repetidas()
     '[29 (2), 33 (1), 80 (1)]'
+    
     >>> c1.troca(c)
     >>> c.exibir_figuras()
     '[3, 4, 29, 33, 78, 80]'
+    >>> c.exibir_repetidas()
+    '[3 (1), 80 (1)]'
+    >>> c.remove(3)
+    3
+    >>> c.remove(80)
+    80
+    >>> c.exibir_repetidas()
+    '[]'
+
     >>> c1.exibir_figuras()
     '[3, 4, 29, 33, 78, 80, 99]'
+    >>> c1.exibir_repetidas()
+    '[29 (1), 80 (1)]'
+    >>> c1.remove(29)
+    29
+    >>> c1.remove(80)
+    80
+    >>> c1.exibir_repetidas()
+    '[]'
     '''
-
 
     def __init__(self, capacidade:int) :
         '''
         Cria um album com *capacidade* e outro para armazenar  
         a quantidade de repetidas contidas no primeiro albúm.
-
-        Os albúns devem ter uma contagem de indice para saber quantas 
-        novas figuras foram adicionada no array.
         '''
 
+        # Os albúns devem ter uma contagem de indice para saber quantas 
+        # novas figuras foram adicionada no array.
         self.capacidade = capacidade
         self.album = array(self.capacidade + 1, 0)
         self.indice = 0
@@ -56,7 +78,7 @@ class Colecao:
 
     def insere(self, figurinha:int):
         '''
-        Insere uma figurinha especifica e ordena o album do usuario.
+        Insere e ordena uma figurinha especifica no album do usuario.
 
         Requer que 0 < numerações das figurinhas < *capacidade_album*
         
@@ -76,23 +98,24 @@ class Colecao:
         
         for i in range(self.indice, -1, -1):
             if figurinha not in self.album:
+
                 if figurinha < self.album[i - 1]:
                     # Se a figurinha for < que a figurinha referente ao
                     # indice do *album*. A figurinha do *album* 
                     # é movido pro proximo indice. 
                     self.album[i] = self.album[i - 1]
                     self.repetidas[i] = self.repetidas[i - 1]
-                    self.repetidas[i - 1] = -1
-                    self.repetidas[i - 1] += 1
+
                 elif figurinha > self.album[i - 1]:
-                    # Se a figurinha > que figurinha referente ao indice do *album*.
                     self.album[i] = figurinha
                     self.indice += 1
                     self.repetidas[i] = -1
                     self.repetidas[i] += 1
                     self.indice_repetidas += 1
+
             else:
                 # Se a figurinha estiver no album, essa condição acontece.
+
                 if figurinha == self.album[i]:
                     # A figurinha percorre pelo *album* principal até
                     # achar a figurinha igual a ela.
@@ -151,7 +174,7 @@ class Colecao:
     def exibir_figuras(self) -> str:
         '''
         Gera uma representação em string das figurinhas presentes em um álbum, 
-        sem considerar as repetidas de cada figurinha.
+        sem considerar as repetições.
 
         Exemplos
         >>> c = Colecao(100)
@@ -161,22 +184,22 @@ class Colecao:
         >>> c.insere(32)
         >>> c.exibir_figuras()
         '[9, 32, 58]'
-        >>> c.remove(32)
-        32
         '''
 
         represetacao_str = '['
         if self.indice != 0:
+
             represetacao_str += str(self.album[0])
             for i in range(1, self.indice):
                 represetacao_str += ', ' + str(self.album[i])
+
         return represetacao_str + ']'
 
 
     def exibir_repetidas(self) -> str:
         '''
         Gerar uma representação em string das figurinhas presentes em um álbum, 
-        indicando a quantidade somente das figurinhas repetidas > 1.
+        representando as figurinhas repetidas na coleção
 
         Exemplos
         >>> c = Colecao(100)
@@ -194,13 +217,14 @@ class Colecao:
         '[58 (2)]'
         '''
 
-        adicionado = 1
+        caso1 = False
         represetacao_str = '['
         if self.indice != 0:
             for i in range(0, self.indice):
-                if self.repetidas[i] > 0 and adicionado == 1:
+
+                if self.repetidas[i] > 0 and not caso1:
                     represetacao_str += str(self.album[i]) + f' ({self.repetidas[i]})'
-                    adicionado -= 1
+                    caso1 = True
 
                 elif self.repetidas[i] > 0:
                     represetacao_str += ', ' + str(self.album[i]) + f' ({self.repetidas[i]})'
@@ -221,8 +245,11 @@ class Colecao:
         >>> c1.insere(9)
         >>> c1.insere(32)
         >>> c1.insere(32)
+        >>> c1.exibir_figuras()
+        '[9, 32, 58]'
         >>> c1.exibir_repetidas()
         '[32 (1), 58 (2)]'
+
         >>> c2 = Colecao(100)
         >>> c2.insere(60)
         >>> c2.insere(60)
@@ -230,17 +257,25 @@ class Colecao:
         >>> c2.insere(60)
         >>> c2.insere(4)
         >>> c2.insere(4)
+        >>> c2.exibir_figuras()
+        '[4, 60]'
         >>> c2.exibir_repetidas()
         '[4 (1), 60 (3)]'
+
         >>> c1.troca(c2)
         >>> c1.exibir_figuras()
         '[4, 9, 32, 58, 60]'
+        >>> c1.exibir_repetidas()
+        '[58 (1)]'
+
         >>> c2.exibir_figuras()
         '[4, 32, 58, 60]'
+        >>> c2.exibir_repetidas()
+        '[60 (2)]'
         '''
 
         # As *trocas_possiveis* será usado para armazenar as 
-        # figurinhas que nao estao em um album1 no album2 e vice-versa.
+        # figurinhas que nao estao no album1, no album2 e vice-versa.
         trocas_possiveis1 = array(self.capacidade, 0)
         indice1 = 0
         trocas_possiveis2 = array(self.capacidade, 0)
@@ -248,13 +283,11 @@ class Colecao:
 
         for i in range(album1.indice):
             if album1.album[i] not in self.album and album1.repetidas[i] > 0:
-                # Insere *num* na *trocas_possiveis1* se o *num* nao estiver no *album2*
                 trocas_possiveis1[indice1] = album1.album[i]
                 indice1 += 1
 
         for j in range(self.indice):
             if self.album[j] not in album1.album and self.repetidas[j] > 0:
-                # Insere *num* na *trocas_possiveis2* se o *num* nao estiver no *album1*
                 trocas_possiveis2[indice2] = self.album[j]
                 indice2 += 1
 
@@ -267,6 +300,7 @@ class Colecao:
                 # Faz a remocao da figurinha(figurinha que foi inserido no album1) no *album2* .
                 album1.remove(trocas_possiveis1[i])
                 self.remove(trocas_possiveis2[i])
+                
         elif indice2 < indice1:
             for i in range(indice2):
                 album1.insere(trocas_possiveis2[i])

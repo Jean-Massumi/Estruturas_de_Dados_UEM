@@ -16,8 +16,11 @@ class Colecao:
     >>> c.insere(3)
     >>> c.insere(78)
     >>> c.insere(80)
+    >>> c.exibir_figuras()
+    '[3, 4, 78, 80]'
     >>> c.exibir_repetidas()
     '[3 (2), 78 (1), 80 (1)]'
+
     >>> c1 = Colecao(100)
     >>> c1.insere(29)
     >>> c1.insere(4)
@@ -28,26 +31,44 @@ class Colecao:
     >>> c1.insere(80)
     >>> c1.insere(80)
     >>> c1.insere(99)
+    >>> c1.exibir_figuras()
+    '[4, 29, 33, 80, 99]'
     >>> c1.exibir_repetidas()
     '[29 (2), 33 (1), 80 (1)]'
+    
     >>> c1.troca(c)
     >>> c.exibir_figuras()
     '[3, 4, 29, 33, 78, 80]'
+    >>> c.exibir_repetidas()
+    '[3 (1), 80 (1)]'
+    >>> c.remove(3)
+    3
+    >>> c.remove(80)
+    80
+    >>> c.exibir_repetidas()
+    '[]'
+
     >>> c1.exibir_figuras()
     '[3, 4, 29, 33, 78, 80, 99]'
+    >>> c1.exibir_repetidas()
+    '[29 (1), 80 (1)]'
+    >>> c1.remove(29)
+    3
+    >>> c1.remove(80)
+    80
+    >>> c1.exibir_repetidas()
+    '[]'
     '''
 
     def __init__(self, capacidade:int) :
         '''
-        Cria um album.
+        Cria um album com uma *capacidade*. 
         '''
-
-        return NotImplemented
 
 
     def insere(self, figurinha:int):
         '''
-        Insere uma figurinha especifica e ordena o album do usuario
+        Insere e ordena uma figurinha especifica no album do usuario.
 
         Requer que 0 < numerações das figurinhas < *capacidade_album*
 
@@ -65,7 +86,7 @@ class Colecao:
         return NotImplemented
 
 
-    def remove(self,figurinha:int) -> int:
+    def remove(self, figurinha:int) -> int:
         '''
         Remove uma figurinha especifica no album do usuario.
 
@@ -99,7 +120,7 @@ class Colecao:
     def exibir_figuras(self) -> str:
         '''
         Gera uma representação em string das figurinhas presentes em um álbum, 
-        sem considerar as repetidas de cada figurinha.
+        sem considerar as repetições.
 
         Exemplos
         >>> c = Colecao(100)
@@ -109,8 +130,6 @@ class Colecao:
         >>> c.insere(32)
         >>> c.exibir_figuras()
         '[9, 32, 58]'
-        >>> c.remove(32)
-        32
         '''
 
         return NotImplemented
@@ -119,7 +138,7 @@ class Colecao:
     def exibir_repetidas(self) -> str:
         '''
         Gerar uma representação em string das figurinhas presentes em um álbum, 
-        indicando a quantidade somente das figurinhas repetidas > 1.
+        representando as figurinhas repetidas na coleção.
 
         Exemplos
         >>> c = Colecao(100)
@@ -140,7 +159,7 @@ class Colecao:
         return NotImplemented
 
 
-    def troca(self, album1:Colecao, album2:Colecao):
+    def troca(self, album1:Colecao):
         '''
         Realizar a troca máxima de figurinhas entre duas coleções, garantindo que cada
         coleção obtenha as figurinhas que não possui.
@@ -153,8 +172,11 @@ class Colecao:
         >>> c1.insere(9)
         >>> c1.insere(32)
         >>> c1.insere(32)
+        >>> c1.exibir_figuras()
+        '[9, 32, 58]'
         >>> c1.exibir_repetidas()
         '[32 (1), 58 (2)]'
+
         >>> c2 = Colecao(100)
         >>> c2.insere(60)
         >>> c2.insere(60)
@@ -162,13 +184,21 @@ class Colecao:
         >>> c2.insere(60)
         >>> c2.insere(4)
         >>> c2.insere(4)
+        >>> c2.exibir_figuras()
+        '[4, 60]'
         >>> c2.exibir_repetidas()
         '[4 (1), 60 (3)]'
+
         >>> c1.troca(c2)
         >>> c1.exibir_figuras()
         '[4, 9, 32, 58, 60]'
+        >>> c1.exibir_repetidas()
+        '[58 (1)]'
+
         >>> c2.exibir_figuras()
         '[4, 32, 58, 60]'
+        >>> c2.exibir_repetidas()
+        '[60 (2)]'
         '''
 
         return NotImplemented
