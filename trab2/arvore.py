@@ -124,8 +124,12 @@ def encontra_caminho(arv:Arvore) -> list:
     >>> encontra_caminho(No(No(No(No(None, 1, None), 3, No(None, 4, None)), 8, None), 2,\
     No(No(No(None, 6, None), 7, None), 3, No(No(None, 2, None), 5, None))))
     [[2, 8, 3, 1], [2, 8, 3, 4], [2, 3, 7, 6], [2, 3, 5, 2]]
-    
 
+    >>> encontra_caminho(No(No(No(No(None, 1, None), 3, No(None, 4, None)), 8, None), 2,\
+    No(No(No(None, 6, None), 7, None), 3, No(No(None, 2, None), 5, No(None, 11, None)))))
+    [[2, 8, 3, 1], [2, 8, 3, 4], [2, 3, 7, 6], [2, 3, 5, 2], [2, 3, 5, 11]]
+
+    Árvore do exemplo 1
           2                 
         /   \               
       8      3              
@@ -134,6 +138,7 @@ def encontra_caminho(arv:Arvore) -> list:
      \        /             
       4      2        
 
+    Árvore do exemplo 3
           2
         /   \
       8      3
@@ -142,6 +147,7 @@ def encontra_caminho(arv:Arvore) -> list:
      \    /   /
       4  6   2      
 
+    Árvore do exemplo 4  
             2
           /   \
         8      3
@@ -149,6 +155,16 @@ def encontra_caminho(arv:Arvore) -> list:
       3      7   5
      / \    /   /
     1   4  6   2 
+    
+    Árvore do exemplo 5
+            2
+          /   \
+        8      3
+       /      / \
+      3      7   5
+     / \    /   / \
+    1   4  6   2  11
+    
     '''
 
     if arv is None:
@@ -183,7 +199,7 @@ def encontra_caminho(arv:Arvore) -> list:
  
         # Condição para verificar, se a quantidade de elementos de uma lista é igual a 
         # altura da arvore
-        if len(atual_caminho) == altura_arvore:
+        if len(novos_caminhos) == altura_arvore:
             caminho.append(novos_caminhos.copy())
             if len(caminho) > 1:
                 if caminho[-1] == caminho[- 2]:
@@ -198,6 +214,9 @@ def encontra_caminho(arv:Arvore) -> list:
     
 
     def encontra_caminho_direita(arv:Arvore, atual_caminho:list, raiz: int):
+        '''
+        Encontra todos os caminhos máximos da direita
+        '''
 
         if arv is None:
             return None
@@ -214,7 +233,7 @@ def encontra_caminho(arv:Arvore) -> list:
             encontra_caminho_direita(arv.dir, novos_caminhos, raiz)
 
 
-        if len(atual_caminho) == altura_arvore:
+        if len(novos_caminhos) == altura_arvore:
             caminho.append(novos_caminhos.copy())
             if len(caminho) > 1:
                 if caminho[-1] == caminho[- 2]:
@@ -252,4 +271,4 @@ def altura(arv: Arvore) -> int:
     
 
 print(encontra_caminho(No(No(No(No(None, 1, None), 3, No(None, 4, None)), 8, None), 2,\
-    No(No(No(None, 6, None), 7, None), 3, No(No(None, 2, None), 5, None)))))
+    No(No(No(None, 6, None), 7, None), 3, No(No(None, 2, None), 5, No(None, 11, None))))))
