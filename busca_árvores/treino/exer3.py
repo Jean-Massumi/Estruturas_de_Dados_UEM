@@ -18,6 +18,7 @@ def busca(arv: Arvore, val: int) -> bool:
     >>> t1 = No(None, 2, No(None, 3, None))
     >>> t2 = No(No(None, -3, None), 1, t1)
     >>> t = No(t2, 4, t3)
+    >>> n = No(No(No(None, -3, None), 1, No(None, 2, No(None, 3, None))), 4, No(No(None, 5, None), 7, None))
 
     >>> busca(None, 10)
     False
