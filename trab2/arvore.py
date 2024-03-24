@@ -110,12 +110,12 @@ def percorre_ele(arv: Arvore, val: int):
 def encontra_caminho(arv:Arvore) -> list:
     '''
     Devolve todos os caminhos de tamanho maximo da arvore.
+    >>> encontra_caminho(None)
+    []
+
     >>> encontra_caminho(No(No(No(None, 3, No(None, 4, None)), 8, None), 2, No(No(None, 7, None), 3,\
     No(No(None, 2, None), 5, None))))
     [[2, 8, 3, 4], [2, 3, 5, 2]]
-
-    >>> encontra_caminho(None)
-    []
 
     >>> encontra_caminho(No(No(No(None, 3, No(None, 4, None)), 8, None), 2, No(No(No(None, 6, None),\
     7, None), 3, No(No(None, 2, None), 5, None))))
@@ -129,7 +129,7 @@ def encontra_caminho(arv:Arvore) -> list:
     No(No(No(None, 6, None), 7, None), 3, No(No(None, 2, None), 5, No(None, 11, None)))))
     [[2, 8, 3, 1], [2, 8, 3, 4], [2, 3, 7, 6], [2, 3, 5, 2], [2, 3, 5, 11]]
 
-    Árvore do exemplo 1
+    Árvore do exemplo 2
           2                 
         /   \               
       8      3              
